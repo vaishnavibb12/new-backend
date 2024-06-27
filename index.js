@@ -5,23 +5,20 @@ bodyParser = require("body-parser");
 cors = require("cors");
 const mongoose = require("mongoose");
 const Port = 1000;
+require("dotenv").config();
+const mongourl = process.env.mongourl;
 
 mongoose.Promise = global.Promise;
 
 // Connect Mongodb Database
-mongoose
-  .connect(
-    "mongodb+srv://vaishnavi:vaishnavi@cluster0.jdthptm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    { useNewUrlParser: true }
-  )
-  .then(
-    () => {
-      console.log("Database is connected");
-    },
-    (err) => {
-      console.log("There is problem while connecting database " + err);
-    }
-  );
+mongoose.connect(mongourl, { useNewUrlParser: true }).then(
+  () => {
+    console.log("Database is connected");
+  },
+  (err) => {
+    console.log("There is problem while connecting database " + err);
+  }
+);
 
 // All the express routes
 const employeeRoutes = require("./Routers/employeeRoutes");
